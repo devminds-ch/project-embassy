@@ -1,10 +1,5 @@
 # Embassy for Raspberry Pi Pico 2W
 
-* https://github.com/dcaponi/ws2812b/blob/main/src/main.rs
-* https://github.com/smart-leds-rs/ws2812-spi-rs
-* https://github.com/rp-rs/ws2812-pio-rs
-* https://github.com/ahdinosaur/blinksy/issues/36
-
 ## Getting Started
 
 See: [embassy.dev](https://embassy.dev/book/#_getting_started)
