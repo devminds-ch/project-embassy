@@ -27,8 +27,8 @@ Configure [probe-rs](https://probe.rs/docs/getting-started/probe-setup/) `udev` 
 * Move file to `/etc/udev/rules.d`
 * Reload rules:
   ```bash
-  udevadmin control --reload
-  udevadm trigger
+  sudo udevadm control --reload
+  sudo udevadm trigger
   ```
 
 Add required Rust target with *hard FPU* support:
