@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            //"preLaunchTask": "${defaultBuildTask}",
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "name": "probe_rs Executable launch",
+            "cwd": "${workspaceFolder}",
+            //!MODIFY
+            "chip": "RP235x",
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "haltAfterReset": true
+            },
+            "coreConfigs": [
+                {
+                    "coreIndex": 0,
+                    "rttEnabled": true,
+                    "programBinary": "target/thumbv8m.main-none-eabihf/debug/devminds-lamp"
+                }
+            ],
+            "env": {
+                //!MODIFY: Remove or use any of the supported DEFMT_LOG options.
+                "DEFMT_LOG": "debug"
+            }
+        }
+    ]
+}

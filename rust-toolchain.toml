@@ -1,6 +1,9 @@
 [toolchain]
 channel = "1.85" # <- as of writing, this is the exact rust version embassy uses
-components = [ "rust-src", "rustfmt" ] # <- optionally add "llvm-tools-preview" for some extra features like "cargo size"
+components = [
+    "rust-src",
+    "rustfmt",
+] # <- optionally add "llvm-tools-preview" for some extra features like "cargo size"
 targets = [
-    "thumbv8m.main-none-eabihf" # <- change for your platform
+    "thumbv8m.main-none-eabihf", # <- change for your platform
 ]

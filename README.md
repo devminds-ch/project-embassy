@@ -1,13 +1,24 @@
-# Embassy for Raspberry Pi Pico 2W
+# Embassy Training Project by [devminds GmbH](https://devminds.ch)
 
-* https://github.com/dcaponi/ws2812b/blob/main/src/main.rs
-* https://github.com/smart-leds-rs/ws2812-spi-rs
-* https://github.com/rp-rs/ws2812-pio-rs
-* https://github.com/ahdinosaur/blinksy/issues/36
+This [Embassy](https://embassy.dev) project is used for Docker or embedded Rust trainings.
+
+The project contains an Embassy application ... **TODO** ...
+
+**FIXME:**
+
+* Breaktpoints are NOT working in VSCode!
+* https://github.com/probe-rs/probe-rs/issues/3702
+* Fixed on `probe-rs` master - install using:
+  ```bash
+  cargo install probe-rs-tools --git https://github.com/probe-rs/probe-rs --locked
+  ```
+* Wait for release `0.32.0` !!!
+
 
 ## Getting Started
 
-See: [embassy.dev](https://embassy.dev/book/#_getting_started)
+* [embassy.dev](https://embassy.dev/book/#_getting_started)
+* [rp235x-project-templates](https://github.com/rp-rs/rp235x-project-template)
 
 Install [probe-rs](https://probe.rs/docs/getting-started/installation/):
 
@@ -27,11 +38,11 @@ Configure [probe-rs](https://probe.rs/docs/getting-started/probe-setup/) `udev` 
 * Move file to `/etc/udev/rules.d`
 * Reload rules:
   ```bash
-  udevadmin control --reload
-  udevadm trigger
+  sudo udevadm control --reload
+  sudo udevadm trigger
   ```
 
-Add required Rust target with *hard FPU* support:
+Add required Rust target with **hard FPU** support:
 
 ```bash
 rustup target add thumbv8m.main-none-eabihf
