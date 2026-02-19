@@ -155,19 +155,15 @@ async fn main(spawner: Spawner) {
 
         match current_mode {
             RunMode::Colored => {
-                // Set devminds logo blue pixels
                 for &i in &DM_LOGO_BLUE_PIXELS {
                     data[i] = DM_BLUE;
                 }
-                // Set devminds logo green pixels
                 for &i in &DM_LOGO_GREEN_PIXELS {
                     data[i] = DM_GREEN;
                 }
-                // Set devminds logo orange pixels
                 for &i in &DM_LOGO_ORANGE_PIXELS {
                     data[i] = DM_ORANGE;
                 }
-                // Set devminds text pixels to red
                 for &i in &DM_TEXT_PIXELS {
                     data[i] = DM_RED;
                 }
@@ -176,6 +172,12 @@ async fn main(spawner: Spawner) {
             }
             RunMode::Rainbow => {
                 for j in 0..(256 * 5) {
+                    // If mode changed, exit rainbow loop early
+                    if RUN_MODE.signaled() {
+                        current_mode = RUN_MODE.wait().await;
+                        break;
+                    }
+
                     //debug!("New Colors:");
                     for i in 0..NUM_LEDS {
                         data[i] =
