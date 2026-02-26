@@ -1,0 +1,53 @@
+name: Build the project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    #runs-on: ubuntu-latest
+    runs-on: devminds-amd64
+    container:
+      image: rust:1.92.0
+    strategy:
+      matrix:
+        BUILD_TARGET: [release] # refers to a cargo profile
+    outputs:
+      release_built: ${{ steps.set-output.outputs.release_built }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install components
+        run: rustup component add rustfmt clippy
+
+      - name: Cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Check code formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run Clippy (linting)
+        run: cargo clippy --all-features -- -D warnings
+
+      - name: Build binaries in "${{ matrix.BUILD_TARGET }}" mode
+        run: cargo build --profile ${{ matrix.BUILD_TARGET }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: devminds-lamp-${{ matrix.BUILD_TARGET }}
+          path: target/thumbv8m.main-none-eabihf/${{ matrix.BUILD_TARGET }}/devminds-lamp
