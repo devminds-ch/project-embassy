@@ -17,7 +17,10 @@
                 {
                     "coreIndex": 0,
                     "rttEnabled": true,
-                    "programBinary": "target/thumbv8m.main-none-eabihf/debug/devminds-lamp"
+                    //!MODIFY
+                    "programBinary": "target/thumbv8m.main-none-eabihf/debug/devminds-lamp",
+                    //!MODIFY
+                    "svdFile": ".vscode/RP2350.svd"
                 }
             ],
             "env": {
