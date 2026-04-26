@@ -61,7 +61,7 @@ jobs:
         run: cargo build --profile ${{ matrix.BUILD_TARGET }} --target thumbv8m.main-none-eabihf
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: devminds-lamp-${{ matrix.BUILD_TARGET }}
           path: target/thumbv8m.main-none-eabihf/${{ matrix.BUILD_TARGET }}/devminds-lamp
