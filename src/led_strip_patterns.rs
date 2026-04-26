@@ -141,7 +141,7 @@ mod tests {
         LED_STRIP_PATTERNS
             .iter()
             .position(|pattern| pattern.name == name)
-            .expect("pattern must exist")
+            .expect("Pattern must exist")
     }
 
     fn render_pattern(index: usize) -> [RGB8; DEVMINDS_LAMP_LED_NUM] {

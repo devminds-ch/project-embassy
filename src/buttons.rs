@@ -1,12 +1,12 @@
-use defmt::unwrap;
 use defmt::warn;
-use embassy_executor::Spawner;
+use embassy_executor::{SpawnError, Spawner};
 use embassy_rp::Peri;
 use embassy_rp::gpio::{AnyPin, Input, Pull};
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 use embassy_sync::channel::Channel;
 use embassy_time::Duration;
 use embassy_time::Timer;
+use thiserror::Error;
 
 /// Number of physical user buttons on the board.
 pub const BUTTON_COUNT: usize = 3;
@@ -22,6 +22,15 @@ pub enum ButtonAction {
     ResetToDefaultPattern,
     /// Switch to the next lamp pattern.
     NextPattern,
+}
+
+/// Errors that can occur during button handling.
+#[derive(Error, Debug, defmt::Format)]
+pub enum ButtonError {
+    #[error("Button tasks have already been spawned")]
+    TasksAlreadySpawned,
+    #[error("Failed to spawn button task: {0}")]
+    TaskSpawnFailed(#[from] SpawnError),
 }
 
 /// Connects a hardware pin to a semantic button action.
@@ -51,10 +60,18 @@ impl ButtonHandler {
     }
 
     /// Spawns one button polling task per configured binding.
-    pub fn spawn_tasks(&mut self, spawner: &Spawner) {
-        for binding in self.bindings.take().expect("button tasks already spawned") {
-            unwrap!(spawner.spawn(button_task(binding.pin, binding.action)));
+    pub fn spawn_tasks(&mut self, spawner: &Spawner) -> Result<(), ButtonError> {
+        let bindings = self
+            .bindings
+            .take()
+            .ok_or(ButtonError::TasksAlreadySpawned)?;
+
+        for binding in bindings {
+            let task_token = button_task(binding.pin, binding.action)?;
+            spawner.spawn(task_token);
         }
+
+        Ok(())
     }
 
     /// Waits for the next button action from the shared queue.

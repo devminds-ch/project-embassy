@@ -34,10 +34,14 @@ async fn main(spawner: Spawner) {
     } = LampBoard::from_peripherals(embassy_rp::init(Default::default()));
 
     let mut status_led_controller = StatusLedController::new(status_led, STATUS_BLINK_INTERVAL);
-    status_led_controller.spawn_task(&spawner);
+    if let Err(e) = status_led_controller.spawn_task(&spawner) {
+        defmt::panic!("Failed to spawn status LED task: {:?}", e);
+    }
 
     let mut button_handler = ButtonHandler::new(buttons);
-    button_handler.spawn_tasks(&spawner);
+    if let Err(e) = button_handler.spawn_tasks(&spawner) {
+        defmt::panic!("Failed to spawn button tasks: {:?}", e);
+    }
 
     // Setup Raspberry Pi Pico's PIO to drive the WS2812 LED string
     let mut pio_ws2812_controller = PioWs2812Controller::new(ws2812_pio, ws2812_dma, ws2812_data);

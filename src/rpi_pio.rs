@@ -16,6 +16,10 @@ bind_interrupts!(struct PioIrqs {
     PIO0_IRQ_0 => InterruptHandler<PIO0>;
 });
 
+bind_interrupts!(struct DmaIrqs {
+    DMA_IRQ_0 => embassy_rp::dma::InterruptHandler<DMA_CH0>;
+});
+
 /// Drives the WS2812 LED strip via the RP2350's PIO peripheral.
 pub struct PioWs2812Controller<'d> {
     ws2812: PioWs2812<'d, PIO0, 0, DEVMINDS_LAMP_LED_NUM, Grb>,
@@ -33,7 +37,14 @@ impl<'d> PioWs2812Controller<'d> {
         } = Pio::new(pio, PioIrqs);
 
         let pio_program = PioWs2812Program::new(&mut pio_common);
-        let ws2812 = PioWs2812::new(&mut pio_common, pio_state_machine, dma, data, &pio_program);
+        let ws2812 = PioWs2812::new(
+            &mut pio_common,
+            pio_state_machine,
+            dma,
+            DmaIrqs,
+            data,
+            &pio_program,
+        );
 
         Self { ws2812 }
     }
