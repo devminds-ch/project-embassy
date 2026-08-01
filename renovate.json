@@ -1,24 +1,25 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-        "config:recommended",
-        "default:automergeMinor",
-        "default:rebaseStalePrs"
-    ],
-    "minimumReleaseAge": "14 days",
-    "prCreation": "not-pending",
-    "packageRules": [
-        {
-            "groupName": "GitHub Actions",
-            "matchManagers": [
-                "github-actions"
-            ]
-        },
-        {
-            "groupName": "Rust",
-            "matchManagers": [
-                "cargo"
-            ]
-        }
-    ]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "default:automergeMinor",
+    "default:rebaseStalePrs"
+  ],
+  "minimumReleaseAge": "14 days",
+  "minimumReleaseAgeBehaviour": "timestamp-optional",
+  "prCreation": "not-pending",
+  "packageRules": [
+    {
+      "groupName": "GitHub Actions",
+      "matchManagers": [
+        "github-actions"
+      ]
+    },
+    {
+      "groupName": "Rust",
+      "matchManagers": [
+        "cargo"
+      ]
+    }
+  ]
 }
