@@ -6,6 +6,7 @@
         "default:rebaseStalePrs"
     ],
     "minimumReleaseAge": "14 days",
+    "minimumReleaseAgeBehavior": "timestamp-optional",
     "prCreation": "not-pending",
     "packageRules": [
         {
