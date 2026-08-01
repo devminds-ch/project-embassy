@@ -1,10 +1,9 @@
 FROM mcr.microsoft.com/devcontainers/rust:2-1-trixie
 
-# Install probe-rs for embedded debugging and flashing
-# HACK: until probe-rs 0.32.0 is released we install the latest version from GitHub
-# RUN curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/releases/latest/download/probe-rs-tools-installer.sh | sh
 USER vscode
-RUN cargo install probe-rs-tools --git https://github.com/probe-rs/probe-rs --locked
+
+# Install probe-rs for embedded debugging and flashing
+RUN curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/releases/latest/download/probe-rs-tools-installer.sh | sh
 USER root
 # Install probe-rs udev rules for USB device access
 RUN mkdir -p /etc/udev/rules.d && \
