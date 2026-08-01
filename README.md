@@ -37,22 +37,6 @@ rustup target add thumbv8m.main-none-eabihf
 
 ### Install probe-rs
 
-**WARNING:** With `probe-rs` v0.31.0, breakpoints are currently not working in VS Code. See:
-
-* https://github.com/probe-rs/probe-rs/issues/2180
-
-The issue has already been fixed on the `probe-rs` master branch.
-
-**WORKAROUND:** Install `probe-rs` from the master branch:
-
-```bash
-cargo install probe-rs-tools --git https://github.com/probe-rs/probe-rs --locked
-```
-
-This workaround is already applied when using the provided devcontainer.
-
----
-
 Install the latest [probe-rs](https://probe.rs/docs/getting-started/installation/) release:
 
 ```bash
