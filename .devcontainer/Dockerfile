@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/rust:2-1-trixie
+FROM mcr.microsoft.com/devcontainers/rust:2-1-trixie@sha256:b7d424781c0e8b5b2897f0c57cb69a15675cc2bbd260be24dce6e0672914830e
 
 USER vscode
 
