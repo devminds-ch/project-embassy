@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: rust:1.97.0
+      image: rust:1.100.0@sha256:223cc32ddca8f3ee90c436dbc94b6b5f052ea7f9653c5201e9612f08ad7d21b8
     strategy:
       matrix:
         BUILD_TARGET: [release] # refers to a cargo profile
@@ -22,7 +22,7 @@ jobs:
       release_built: ${{ steps.set-output.outputs.release_built }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Install Rust components
         run: rustup component add rustfmt clippy
@@ -33,7 +33,7 @@ jobs:
           rustup target add x86_64-unknown-linux-gnu
 
       - name: Cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: |
             ~/.cargo/registry
@@ -60,7 +60,7 @@ jobs:
         run: cargo build --profile ${{ matrix.BUILD_TARGET }} --target thumbv8m.main-none-eabihf
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: devminds-lamp-${{ matrix.BUILD_TARGET }}
           path: target/thumbv8m.main-none-eabihf/${{ matrix.BUILD_TARGET }}/devminds-lamp
